@@ -8,8 +8,15 @@
     --danger: #e56b60;
 }
 
-* {
+/* Corrección del selector universal */
+*, *::before, *::after {
     box-sizing: border-box;
+}
+
+html {
+    /* Asegura que la página permita scroll de forma fluida en móviles */
+    overflow-x: hidden;
+    height: 100%;
 }
 
 body {
@@ -18,28 +25,33 @@ body {
     background: var(--bg);
     color: var(--ink);
     touch-action: manipulation;
-    user-select: none;
+    /* Evita bloquear completamente el touch-action en todo el body para permitir scroll fluido */
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Cabecera corporativa idéntica al prototipo */
 header.app-header {
     background: var(--navy);
     color: #fff;
-    padding: 16px 5%;
+    padding: 14px 4%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     flex-wrap: wrap;
     box-shadow: 0 4px 14px rgba(16, 54, 83, 0.15);
+    width: 100%;
 }
 
 .brand {
     font-weight: 800;
-    font-size: 19px;
+    font-size: clamp(16px, 4vw, 19px);
     display: flex;
     align-items: center;
     gap: 10px;
+    word-break: break-word;
 }
 
 .brand span {
@@ -64,7 +76,7 @@ nav.main-nav {
 .btn-vial {
     border: 0;
     border-radius: 12px;
-    padding: 11px 16px;
+    padding: 10px 14px;
     font-weight: 700;
     cursor: pointer;
     transition: transform 0.1s ease, filter 0.15s ease;
@@ -93,9 +105,16 @@ nav.main-nav .btn-vial.active {
     padding: 12px 20px;
     font-weight: 800;
     cursor: pointer;
+    width: 100%;
 }
 
-.btn-Primary-vial:hover {
+@media(min-width: 480px) {
+    .btn-primary-vial {
+        width: auto;
+    }
+}
+
+.btn-primary-vial:hover {
     filter: brightness(0.96);
 }
 
@@ -121,25 +140,35 @@ nav.main-nav .btn-vial.active {
 
 main.app-main {
     max-width: 1080px;
-    margin: 26px auto 90px auto;
-    padding: 0 18px;
+    width: 100%;
+    margin: 20px auto 100px auto; /* Margen inferior mayor para evitar solapamiento con footer fijo */
+    padding: 0 16px;
+    flex: 1;
 }
 
 /* Banner Hero sin dependencia obligatoria de internet */
 .hero {
     background: linear-gradient(120deg, #103653f2, #007f80e0);
     color: #fff;
-    border-radius: 24px;
-    padding: 38px;
-    min-height: 240px;
+    border-radius: 20px;
+    padding: 24px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-shadow: 0 10px 28px rgba(16, 54, 83, 0.14);
 }
 
+@media(min-width: 768px) {
+    .hero {
+        padding: 38px;
+        min-height: 240px;
+        border-radius: 24px;
+    }
+}
+
 .hero h1 {
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: clamp(24px, 5vw, 42px);
     max-width: 640px;
     margin: 10px 0;
     font-weight: 800;
@@ -149,11 +178,12 @@ main.app-main {
     max-width: 580px;
     line-height: 1.6;
     margin-bottom: 20px;
+    font-size: clamp(14px, 3vw, 16px);
 }
 
 .grid-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 14px;
     margin: 20px 0;
 }
@@ -162,13 +192,13 @@ main.app-main {
     background: #fff;
     border: 1px solid #e1eaf0;
     border-radius: 18px;
-    padding: 22px;
+    padding: 18px;
     box-shadow: 0 5px 20px #17364a0a;
 }
 
 .card-vial h3 {
     margin: 8px 0;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }
 
@@ -179,6 +209,7 @@ main.app-main {
 .muted {
     color: var(--muted);
     line-height: 1.5;
+    font-size: 14px;
 }
 
 .pill {
@@ -199,12 +230,13 @@ main.app-main {
 .panel-narrow {
     max-width: 760px;
     margin: 0 auto;
+    width: 100%;
 }
 
 /* Selector de categorías en tarjetas para tablets */
 .category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
     margin: 12px 0 20px;
 }
@@ -213,7 +245,7 @@ main.app-main {
     background: #fff;
     border: 2px solid #dbe6ed;
     border-radius: 16px;
-    padding: 16px;
+    padding: 14px;
     cursor: pointer;
     transition: all 0.15s ease;
     text-align: left;
@@ -241,14 +273,21 @@ main.app-main {
 .timer-badge {
     background: #fff0ee;
     color: var(--danger);
-    padding: 10px 22px;
+    padding: 8px 18px;
     border-radius: 99px;
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 900;
     border: 2px solid #fcdad6;
     box-shadow: 0 4px 14px rgba(229, 107, 96, 0.25);
     transition: all 0.15s ease-in-out;
     letter-spacing: -0.5px;
+}
+
+@media(min-width: 768px) {
+    .timer-badge {
+        font-size: 26px;
+        padding: 10px 22px;
+    }
 }
 
 .timer-badge.critical {
@@ -284,16 +323,16 @@ main.app-main {
 }
 
 .question-media {
-    font-size: 58px;
+    font-size: 48px;
     background: #eaf5f8;
     border-radius: 16px;
-    padding: 16px;
+    padding: 12px;
     text-align: center;
     margin-bottom: 16px;
 }
 
 .question-media img {
-    max-height: 210px;
+    max-height: 180px;
     max-width: 100%;
     border-radius: 12px;
     object-fit: contain;
@@ -310,12 +349,13 @@ main.app-main {
     border: 2px solid #dbe6ed;
     text-align: left;
     color: var(--ink);
-    padding: 15px 18px;
+    padding: 14px 16px;
     border-radius: 12px;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     transition: border-color 0.15s, background-color 0.15s;
+    width: 100%;
 }
 
 .answer-btn:hover:not(:disabled) {
@@ -346,6 +386,7 @@ main.app-main {
     border-left: 4px solid var(--teal);
     margin: 14px 0 4px;
     line-height: 1.5;
+    font-size: 14px;
 }
 
 .field {
@@ -359,7 +400,7 @@ main.app-main {
     background: #fff;
 }
 
-/* Tablas y Pestañas */
+/* Tablas y Pestañas con soporte de scroll horizontal si desbordan */
 .tabs-bar {
     display: flex;
     gap: 8px;
@@ -375,6 +416,7 @@ main.app-main {
     padding: 10px 16px;
     font-weight: 700;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .tab-btn.active {
@@ -382,9 +424,17 @@ main.app-main {
     color: var(--yellow);
 }
 
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+}
+
 .table-vial {
     width: 100%;
     border-collapse: collapse;
+    min-width: 450px; /* Evita que se compacte de más en móviles */
 }
 
 .table-vial th,
@@ -392,8 +442,15 @@ main.app-main {
     text-align: left;
     border-bottom: 1px solid #e5edf2;
     padding: 11px 10px;
-    font-size: 14px;
+    font-size: 13px;
     vertical-align: middle;
+}
+
+@media(min-width: 768px) {
+    .table-vial th,
+    .table-vial td {
+        font-size: 14px;
+    }
 }
 
 .table-vial th {
@@ -417,7 +474,7 @@ footer.app-footer {
 
 @media (max-width: 600px) {
     .hero {
-        padding: 25px;
+        padding: 20px;
     }
 
     .card-vial {
@@ -425,6 +482,6 @@ footer.app-footer {
     }
 
     header.app-header {
-        padding: 14px 18px;
+        padding: 12px 14px;
     }
 }

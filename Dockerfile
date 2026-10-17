@@ -1,13 +1,13 @@
-# Usamos una imagen oficial de Java 21
-FROM eclipse-temurin:21-jre-alpine
-
+# Etapa 1: Compilación con Gradle
+FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /app
+COPY . .
+RUN chmod +x gradlew
+RUN ./gradlew clean bootJar -x test
 
-# Copiamos el JAR que ya compilamos localmente
-COPY build/libs/trivia-0.0.1-SNAPSHOT.jar app.jar
-
-# Exponemos el puerto
+# Etapa 2: Ejecución limpia con JRE
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/build/libs/trivia-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8081
-
-# Comando para arrancar la aplicación respetando el puerto dinámico de la nube
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,4 +1,6 @@
-const API_BASE = window.location.port === '8081' ? '/api/v1' : 'http://localhost:8081/api/v1';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8081/api/v1'
+    : 'https://seguridad-vial-5mt2.onrender.com/api/v1';
 
 // Estado global de juego en la tablet
 let publicCategories = [];

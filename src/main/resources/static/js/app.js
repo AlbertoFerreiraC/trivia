@@ -12,6 +12,56 @@ let currentQuestionId = null;
 let countdownInterval = null;
 let answerSubmitted = false;
 
+// Control de Audio Web nativo mejorado para tablets y efectos de presión
+let audioCtx = null;
+let lastBeepSecond = -1;
+
+function getAudioContext() {
+    try {
+        if (!audioCtx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) {
+                audioCtx = new AudioContext();
+            }
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    } catch (e) {
+        console.error("Error al iniciar AudioContext:", e);
+    }
+    return audioCtx;
+}
+
+// Generador de efectos de sonido de tensión / tic-tac
+function playPressureTick(isCritical) {
+    try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+
+        if (ctx.state === 'suspended') {
+            ctx.resume();
+        }
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = isCritical ? 'sawtooth' : 'sine';
+        osc.frequency.setValueAtTime(isCritical ? 880 : 440, ctx.currentTime);
+
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (isCritical ? 0.15 : 0.09));
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + (isCritical ? 0.15 : 0.09));
+    } catch (e) {
+        // Ignorar restricciones si el navegador aún no permite audio
+    }
+}
+
 // Estado del Panel Administrativo
 let adminQuestionsPage = 0;
 let adminQuestionsList = [];
@@ -101,6 +151,9 @@ function selectCategoryCard(catId) {
 }
 
 async function startNewGame() {
+    // Desbloquear y activar el audio con el clic del botón de inicio de partida
+    getAudioContext();
+
     const nameInput = document.getElementById('participantNameInput');
     const participantName = nameInput.value.trim();
     const tabletCode = document.getElementById('tabletCodeSelect').value;
@@ -149,6 +202,7 @@ async function startNewGame() {
 async function fetchNextOrCurrentQuestion() {
     answerSubmitted = false;
     clearInterval(countdownInterval);
+    lastBeepSecond = -1;
     document.getElementById('feedbackBox').classList.add('hidden');
     document.getElementById('timerBadge').classList.remove('critical');
 
@@ -209,13 +263,22 @@ function startVisualCountdown(remainingMs) {
         const elapsed = performance.now() - startWallClock;
         const leftMs = Math.max(0, remainingMs - elapsed);
 
-        // Se eliminan los milisegundos mostrando únicamente segundos enteros redondeados hacia arriba
+        // Segundos enteros sin milisegundos
         const leftSec = Math.ceil(leftMs / 1000);
         timeSpan.textContent = leftSec;
 
-        if (leftMs <= 1500) {
-            badge.classList.add('critical');
+        // Reproducir sonido de tensión en cada segundo exacto
+        if (leftSec !== lastBeepSecond && leftSec > 0) {
+            lastBeepSecond = leftSec;
+            playPressureTick(leftSec <= 2);
         }
+
+        if (leftMs <= 2000) {
+            badge.classList.add('critical');
+        } else {
+            badge.classList.remove('critical');
+        }
+
         if (leftMs <= 0) {
             clearInterval(countdownInterval);
             if (!answerSubmitted) {
@@ -225,7 +288,7 @@ function startVisualCountdown(remainingMs) {
     };
 
     updateTick();
-    countdownInterval = setInterval(updateTick, 100);
+    countdownInterval = setInterval(updateTick, 80);
 }
 
 async function submitPlayerAnswer(selectedOptionId, clickedBtn) {
@@ -474,7 +537,6 @@ async function loadAdminCategories() {
     if (!res.ok) return;
     adminCategoriesCache = await res.json();
 
-    // Poblar selectores de categoría en filtros y modal
     const filterSel = document.getElementById('filterQuestionCategory');
     filterSel.innerHTML = '<option value="">Todas las categorías</option>' +
         adminCategoriesCache.map(c => `<option value="${c.id}">${c.icon} ${escapeHtml(c.name)}</option>`).join('');
@@ -679,7 +741,6 @@ async function saveQuestionFromModal() {
         const savedQuestion = await res.json();
         if (!res.ok) throw new Error(savedQuestion.message || 'Error validando la pregunta');
 
-        // Si adjuntó un archivo de imagen, lo subimos al endpoint multipart
         const fileInput = document.getElementById('qModalImageInput');
         if (fileInput.files && fileInput.files.length > 0) {
             const formData = new FormData();
@@ -717,7 +778,6 @@ async function deleteCurrentQuestionImage() {
     }
 }
 
-// --- Historial de Partidas, Participantes y Errores Operativos ---
 async function loadAdminGamesHistory() {
     const res = await fetch(`${API_BASE}/admin/games?page=0&size=40`, {credentials: 'include'});
     if (!res.ok) return;

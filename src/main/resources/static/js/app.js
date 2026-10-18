@@ -1,7 +1,7 @@
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:8081/api/v1'
     : window.location.hostname.includes('railway.app')
-        ? 'https://trivia-production-ec82.up.railway.app/api/v1'
+        ? 'https://trivia-fersal.up.railway.app/api/v1'
         : 'https://seguridad-vial-5mt2.onrender.com/api/v1';
 
 // Estado global de juego en la tablet

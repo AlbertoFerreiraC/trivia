@@ -1,4 +1,8 @@
-const API_BASE = window.location.port === '8081' ? '/api/v1' : 'http://localhost:8081/api/v1';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8081/api/v1'
+    : window.location.hostname.includes('railway.app')
+        ? 'https://trivia-production-ec82.up.railway.app/api/v1'
+        : 'https://seguridad-vial-5mt2.onrender.com/api/v1';
 
 // Estado global de juego en la tablet
 let publicCategories = [];
@@ -204,7 +208,9 @@ function startVisualCountdown(remainingMs) {
     const updateTick = () => {
         const elapsed = performance.now() - startWallClock;
         const leftMs = Math.max(0, remainingMs - elapsed);
-        const leftSec = (leftMs / 1000).toFixed(1);
+
+        // Se eliminan los milisegundos mostrando únicamente segundos enteros redondeados hacia arriba
+        const leftSec = Math.ceil(leftMs / 1000);
         timeSpan.textContent = leftSec;
 
         if (leftMs <= 1500) {
@@ -213,13 +219,13 @@ function startVisualCountdown(remainingMs) {
         if (leftMs <= 0) {
             clearInterval(countdownInterval);
             if (!answerSubmitted) {
-                submitPlayerAnswer(null, null); // Cierre automático al agotarse los 5 segundos
+                submitPlayerAnswer(null, null); // Cierre automático al agotarse el tiempo
             }
         }
     };
 
     updateTick();
-    countdownInterval = setInterval(updateTick, 80);
+    countdownInterval = setInterval(updateTick, 100);
 }
 
 async function submitPlayerAnswer(selectedOptionId, clickedBtn) {

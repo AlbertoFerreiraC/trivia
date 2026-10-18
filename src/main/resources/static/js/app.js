@@ -208,7 +208,9 @@ function startVisualCountdown(remainingMs) {
     const updateTick = () => {
         const elapsed = performance.now() - startWallClock;
         const leftMs = Math.max(0, remainingMs - elapsed);
-        const leftSec = (leftMs / 1000).toFixed(1);
+
+        // Se eliminan los milisegundos mostrando únicamente segundos enteros redondeados hacia arriba
+        const leftSec = Math.ceil(leftMs / 1000);
         timeSpan.textContent = leftSec;
 
         if (leftMs <= 1500) {
@@ -217,13 +219,13 @@ function startVisualCountdown(remainingMs) {
         if (leftMs <= 0) {
             clearInterval(countdownInterval);
             if (!answerSubmitted) {
-                submitPlayerAnswer(null, null); // Cierre automático al agotarse los 5 segundos
+                submitPlayerAnswer(null, null); // Cierre automático al agotarse el tiempo
             }
         }
     };
 
     updateTick();
-    countdownInterval = setInterval(updateTick, 80);
+    countdownInterval = setInterval(updateTick, 100);
 }
 
 async function submitPlayerAnswer(selectedOptionId, clickedBtn) {

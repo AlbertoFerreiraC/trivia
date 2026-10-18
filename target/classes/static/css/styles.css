@@ -262,40 +262,46 @@ main.app-main {
 }
 
 /* Pantalla de Pregunta y Cronómetro */
+/* Pantalla de Pregunta y Cronómetro */
 .topline {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .timer-badge {
-    background: #fff0ee;
+    background: linear-gradient(135deg, #fff0ee 0%, #ffe3e0 100%);
     color: var(--danger);
-    padding: 8px 18px;
+    padding: 12px 28px;
     border-radius: 99px;
-    font-size: 22px;
+    font-size: 32px; /* Cronómetro mucho más grande y visible */
     font-weight: 900;
-    border: 2px solid #fcdad6;
-    box-shadow: 0 4px 14px rgba(229, 107, 96, 0.25);
+    border: 3px solid #fcdad6;
+    box-shadow: 0 6px 20px rgba(229, 107, 96, 0.3);
     transition: all 0.15s ease-in-out;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 @media(min-width: 768px) {
     .timer-badge {
-        font-size: 26px;
-        padding: 10px 22px;
+        font-size: 40px; /* Tamaño impactante en tablets y pantallas grandes */
+        padding: 14px 34px;
+        border-width: 4px;
     }
 }
 
 .timer-badge.critical {
-    background: var(--danger);
+    background: linear-gradient(135deg, var(--danger) 0%, #c54a3f 100%);
     color: #fff;
-    transform: scale(1.12);
-    box-shadow: 0 0 20px rgba(229, 107, 96, 0.8);
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(229, 107, 96, 0.8);
     animation: pulseTimer 0.6s infinite alternate;
+    border-color: #ffb5ad;
 }
 
 @keyframes pulseTimer {
@@ -303,7 +309,7 @@ main.app-main {
         transform: scale(1);
     }
     to {
-        transform: scale(1.15);
+        transform: scale(1.08);
     }
 }
 

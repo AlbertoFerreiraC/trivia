@@ -273,7 +273,7 @@ function startVisualCountdown(remainingMs) {
             playPressureTick(leftSec <= 2);
         }
 
-        if (leftMs <= 2000) {
+        if (leftMs <= 10000) {
             badge.classList.add('critical');
         } else {
             badge.classList.remove('critical');

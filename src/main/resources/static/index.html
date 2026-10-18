@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Desafío de Seguridad Vial - Competencia en Tablets</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
@@ -57,7 +57,7 @@
     </section>
 
     <!-- 2. CONFIGURACIÓN DE PARTIDA (PARTICIPANTE + TABLET + CATEGORÍA) -->
-    <section id="setup" class="hidden panel-narrow">
+    <section class="hidden panel-narrow" id="setup">
         <div class="card-vial">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
                 <h2 class="fw-bold m-0">Configurar Partida</h2>
@@ -69,12 +69,12 @@
             <div class="row g-3">
                 <div class="col-md-8">
                     <label class="fw-bold small">Nombre o Apodo del Participante</label>
-                    <input type="text" id="participantNameInput" class="field" maxlength="100"
-                           placeholder="Ej. Alberto Ferreira">
+                    <input class="field" id="participantNameInput" maxlength="100" placeholder="Ej. Alberto Ferreira"
+                           type="text">
                 </div>
                 <div class="col-md-4">
                     <label class="fw-bold small">Dispositivo / Tablet</label>
-                    <select id="tabletCodeSelect" class="field" onchange="updateTabletBadge()">
+                    <select class="field" id="tabletCodeSelect" onchange="updateTabletBadge()">
                         <option value="TABLET_1">Tablet 1</option>
                         <option value="TABLET_2">Tablet 2</option>
                         <option value="TABLET_3">Tablet 3</option>
@@ -83,9 +83,9 @@
             </div>
 
             <label class="fw-bold small mt-2">Seleccioná una Categoría</label>
-            <div id="categoriesContainer" class="category-grid"></div>
+            <div class="category-grid" id="categoriesContainer"></div>
 
-            <div id="setupAlert" class="alert alert-danger hidden py-2"></div>
+            <div class="alert alert-danger hidden py-2" id="setupAlert"></div>
 
             <button class="btn-primary-vial w-100 fs-5 mt-2" id="btnStartGame" onclick="startNewGame()">
                 ¡Comenzar Juego! →
@@ -94,7 +94,7 @@
     </section>
 
     <!-- 3. PANTALLA DE PREGUNTA Y RESPUESTAS -->
-    <section id="quiz" class="hidden panel-narrow">
+    <section class="hidden panel-narrow" id="quiz">
         <div class="card-vial">
             <div class="topline align-items-center mb-3">
                 <span class="pill" id="quizPlayerInfo">PARTICIPANTE · 1/5</span>
@@ -108,19 +108,19 @@
 
             <div class="question-media" id="questionMediaBox">
                 <span id="questionIcon">🚦</span>
-                <img id="questionImage" class="hidden" alt="Imagen de la pregunta">
+                <img alt="Imagen de la pregunta" class="hidden" id="questionImage">
             </div>
 
-            <h3 id="questionText" class="fw-bold mb-3">Cargando pregunta...</h3>
+            <h3 class="fw-bold mb-3" id="questionText">Cargando pregunta...</h3>
 
             <div class="answers-list" id="answersContainer"></div>
 
-            <div id="feedbackBox" class="feedback-box hidden"></div>
+            <div class="feedback-box hidden" id="feedbackBox"></div>
         </div>
     </section>
 
     <!-- 4. RESUMEN DE LA PARTIDA -->
-    <section id="results" class="hidden panel-narrow">
+    <section class="hidden panel-narrow" id="results">
         <div class="card-vial text-center">
             <div style="font-size: 64px;">🏆</div>
             <h1 class="fw-bold mt-2" id="resultTitle">¡Desafío Completado!</h1>
@@ -130,7 +130,7 @@
                 <div class="col-4">
                     <div class="p-3 rounded-4" style="background:#eff8f7;">
                         <div class="small muted fw-bold">PUNTAJE TOTAL</div>
-                        <div class="fs-2 fw-bold" style="color:var(--teal);" id="resTotalScore">0</div>
+                        <div class="fs-2 fw-bold" id="resTotalScore" style="color:var(--teal);">0</div>
                         <small class="muted">de 250 máx</small>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
     </section>
 
     <!-- 5. RANKINGS (PESTAÑA POR COMPETENCIA Y PESTAÑA GENERAL) -->
-    <section id="ranking" class="hidden">
+    <section class="hidden" id="ranking">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
             <div>
                 <h2 class="fw-bold m-0">🏆 Rankings de Participantes</h2>
@@ -178,7 +178,7 @@
         </div>
 
         <!-- Vista 5.1: Ranking por Competencia -->
-        <div id="rankingCompetitionView" class="card-vial">
+        <div class="card-vial" id="rankingCompetitionView">
             <div class="table-responsive">
                 <table class="table-vial">
                     <thead>
@@ -196,12 +196,12 @@
                     <tbody id="compRankingRows"></tbody>
                 </table>
             </div>
-            <p id="emptyCompRanking" class="muted my-3 hidden">Todavía no hay partidas finalizadas en esta
+            <p class="muted my-3 hidden" id="emptyCompRanking">Todavía no hay partidas finalizadas en esta
                 competencia.</p>
         </div>
 
         <!-- Vista 5.2: Ranking General -->
-        <div id="rankingGeneralView" class="card-vial hidden">
+        <div class="card-vial hidden" id="rankingGeneralView">
             <div class="table-responsive">
                 <table class="table-vial">
                     <thead>
@@ -217,14 +217,14 @@
                     <tbody id="genRankingRows"></tbody>
                 </table>
             </div>
-            <p id="emptyGenRanking" class="muted my-3 hidden">Todavía no hay historial acumulado.</p>
+            <p class="muted my-3 hidden" id="emptyGenRanking">Todavía no hay historial acumulado.</p>
         </div>
     </section>
 
     <!-- 6. PANEL ADMINISTRATIVO PROTEGIDO -->
-    <section id="admin" class="hidden">
+    <section class="hidden" id="admin">
         <!-- 6.1 Login Administrativo -->
-        <div id="adminLoginBox" class="panel-narrow" style="max-width: 460px;">
+        <div class="panel-narrow" id="adminLoginBox" style="max-width: 460px;">
             <div class="card-vial">
                 <span class="pill mb-2">ACCESO RESTRINGIDO</span>
                 <h3 class="fw-bold">Panel Administrativo</h3>
@@ -232,19 +232,19 @@
                     imágenes y competencias.</p>
 
                 <label class="fw-bold small">Usuario</label>
-                <input type="text" id="adminUsername" class="field" value="admin">
+                <input class="field" id="adminUsername" type="text" value="admin">
 
                 <label class="fw-bold small">Contraseña</label>
-                <input type="password" id="adminPassword" class="field" placeholder="••••••••">
+                <input class="field" id="adminPassword" placeholder="••••••••" type="password">
 
-                <div id="adminLoginError" class="alert alert-danger py-2 hidden"></div>
+                <div class="alert alert-danger py-2 hidden" id="adminLoginError"></div>
 
                 <button class="btn-primary-vial w-100 mt-2" onclick="adminLogin()">Iniciar Sesión →</button>
             </div>
         </div>
 
         <!-- 6.2 Dashboard Administrativo Completo -->
-        <div id="adminDashboardBox" class="hidden">
+        <div class="hidden" id="adminDashboardBox">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                 <div>
                     <span class="pill" id="adminWelcomePill">ADMIN CONECTADO</span>
@@ -298,15 +298,15 @@
             </div>
 
             <!-- Sub-vista A: Gestión de Preguntas -->
-            <div id="adminTab_questions" class="card-vial">
+            <div class="card-vial" id="adminTab_questions">
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                     <div class="d-flex gap-2 flex-wrap align-items-center">
-                        <select id="filterQuestionCategory" class="field m-0" style="width:auto;"
-                                onchange="loadAdminQuestions(0)">
+                        <select class="field m-0" id="filterQuestionCategory" onchange="loadAdminQuestions(0)"
+                                style="width:auto;">
                             <option value="">Todas las categorías</option>
                         </select>
-                        <select id="filterQuestionActive" class="field m-0" style="width:auto;"
-                                onchange="loadAdminQuestions(0)">
+                        <select class="field m-0" id="filterQuestionActive" onchange="loadAdminQuestions(0)"
+                                style="width:auto;">
                             <option value="">Todos los estados</option>
                             <option value="true">Solo Activas</option>
                             <option value="false">Solo Inactivas</option>
@@ -341,21 +341,21 @@
             </div>
 
             <!-- Sub-vista B: Gestión de Categorías -->
-            <div id="adminTab_categories" class="card-vial hidden">
+            <div class="card-vial hidden" id="adminTab_categories">
                 <div class="row g-4">
                     <div class="col-md-5">
                         <h4 class="fw-bold" id="catFormTitle">Nueva / Editar Categoría</h4>
-                        <input type="hidden" id="editCategoryId">
+                        <input id="editCategoryId" type="hidden">
                         <label class="small fw-bold">Código único (slug)</label>
-                        <input type="text" id="catSlug" class="field" placeholder="ej. senales">
+                        <input class="field" id="catSlug" placeholder="ej. senales" type="text">
                         <label class="small fw-bold">Nombre</label>
-                        <input type="text" id="catName" class="field" placeholder="Señales de tránsito">
+                        <input class="field" id="catName" placeholder="Señales de tránsito" type="text">
                         <label class="small fw-bold">Ícono (Emoji)</label>
-                        <input type="text" id="catIcon" class="field" value="🚦">
+                        <input class="field" id="catIcon" type="text" value="🚦">
                         <label class="small fw-bold">Descripción</label>
-                        <input type="text" id="catDesc" class="field">
+                        <input class="field" id="catDesc" type="text">
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="catActive" checked>
+                            <input checked class="form-check-input" id="catActive" type="checkbox">
                             <label class="form-check-label fw-bold" for="catActive">Categoría Activa</label>
                         </div>
                         <div class="d-flex gap-2">
@@ -382,7 +382,7 @@
             </div>
 
             <!-- Sub-vista C: Historial de Partidas -->
-            <div id="adminTab_games" class="card-vial hidden">
+            <div class="card-vial hidden" id="adminTab_games">
                 <h4 class="fw-bold mb-3">Historial Completo de Partidas</h4>
                 <div class="table-responsive">
                     <table class="table-vial">
@@ -405,7 +405,7 @@
             </div>
 
             <!-- Sub-vista D: Participantes -->
-            <div id="adminTab_participants" class="card-vial hidden">
+            <div class="card-vial hidden" id="adminTab_participants">
                 <h4 class="fw-bold mb-3">Participantes Registrados</h4>
                 <table class="table-vial">
                     <thead>
@@ -421,7 +421,7 @@
             </div>
 
             <!-- Sub-vista E: Errores Operativos -->
-            <div id="adminTab_errors" class="card-vial hidden">
+            <div class="card-vial hidden" id="adminTab_errors">
                 <h4 class="fw-bold mb-3">Registro de Eventos y Errores Operativos</h4>
                 <table class="table-vial">
                     <thead>
@@ -441,38 +441,38 @@
 </main>
 
 <!-- MODAL PARA CREAR / EDITAR PREGUNTA CON 5 OPCIONES E IMAGEN -->
-<div class="modal fade" id="questionModal" tabindex="-1" aria-hidden="true">
+<div aria-hidden="true" class="modal fade" id="questionModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content" style="border-radius: 18px;">
             <div class="modal-header" style="background: var(--navy); color: #fff;">
                 <h5 class="modal-title fw-bold" id="questionModalTitle">Configurar Pregunta</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button class="btn-close btn-close-white" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="qModalId">
+                <input id="qModalId" type="hidden">
                 <div class="row g-2">
                     <div class="col-md-6">
                         <label class="small fw-bold">Categoría</label>
-                        <select id="qModalCategory" class="field"></select>
+                        <select class="field" id="qModalCategory"></select>
                     </div>
                     <div class="col-md-3">
                         <label class="small fw-bold">Ícono</label>
-                        <input type="text" id="qModalIcon" class="field" value="🚦">
+                        <input class="field" id="qModalIcon" type="text" value="🚦">
                     </div>
                     <div class="col-md-3 d-flex align-items-center pt-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="qModalActive" checked>
+                            <input checked class="form-check-input" id="qModalActive" type="checkbox">
                             <label class="form-check-label fw-bold" for="qModalActive">Pregunta Activa</label>
                         </div>
                     </div>
                 </div>
 
                 <label class="small fw-bold">Enunciado de la Pregunta</label>
-                <input type="text" id="qModalStatement" class="field" placeholder="¿Qué indica la señal...?">
+                <input class="field" id="qModalStatement" placeholder="¿Qué indica la señal...?" type="text">
 
                 <label class="small fw-bold">Explicación Educativa (se muestra tras responder)</label>
-                <input type="text" id="qModalExplanation" class="field"
-                       placeholder="La señal exige detener por completo...">
+                <input class="field" id="qModalExplanation" placeholder="La señal exige detener por completo..."
+                       type="text">
 
                 <hr>
                 <label class="small fw-bold d-block mb-2">5 Opciones de Respuesta (Marcá con el círculo la ÚNICA
@@ -483,20 +483,20 @@
 
                 <hr>
                 <label class="small fw-bold">Imagen Opcional (JPEG, PNG o WebP · Máx 2 MB)</label>
-                <input type="file" id="qModalImageInput" class="field" accept="image/jpeg,image/png,image/webp">
-                <div id="qModalCurrentImageBox" class="hidden mt-2">
-                    <img id="qModalPreviewImg" src="" alt="Vista previa"
+                <input accept="image/jpeg,image/png,image/webp" class="field" id="qModalImageInput" type="file">
+                <div class="hidden mt-2" id="qModalCurrentImageBox">
+                    <img alt="Vista previa" id="qModalPreviewImg" src=""
                          style="max-height: 110px; border-radius: 10px;">
-                    <button type="button" class="btn-danger-vial ms-2" onclick="deleteCurrentQuestionImage()">Eliminar
+                    <button class="btn-danger-vial ms-2" onclick="deleteCurrentQuestionImage()" type="button">Eliminar
                         Imagen Actual
                     </button>
                 </div>
 
-                <div id="qModalError" class="alert alert-danger py-2 mt-2 hidden"></div>
+                <div class="alert alert-danger py-2 mt-2 hidden" id="qModalError"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-secondary-vial" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn-primary-vial" onclick="saveQuestionFromModal()">Guardar Pregunta
+                <button class="btn-secondary-vial" data-bs-dismiss="modal" type="button">Cancelar</button>
+                <button class="btn-primary-vial" onclick="saveQuestionFromModal()" type="button">Guardar Pregunta
                 </button>
             </div>
         </div>
@@ -506,5 +506,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/app.js"></script>
+
+<footer class="app-footer-modern">
+    <div class="footer-content">
+        <span>© 2026 FERSAL · Trivia de Seguridad Vial</span>
+    </div>
+</footer>
+
 </body>
 </html>

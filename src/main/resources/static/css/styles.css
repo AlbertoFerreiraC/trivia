@@ -491,3 +491,45 @@ footer.app-footer {
         padding: 12px 14px;
     }
 }
+
+/* Footer moderno, compacto y siempre adaptado */
+.app-footer-modern {
+    width: 100%;
+    background: #ffffff;
+    border-top: 1px solid #e1eaf0;
+    padding: 8px 16px;
+    text-align: center;
+    margin-top: auto; /* Empuja el footer hacia abajo si la página es corta */
+    box-shadow: 0 -2px 10px rgba(16, 54, 83, 0.04);
+}
+
+.footer-content {
+    font-size: 13px;
+    color: var(--muted, #64798b);
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+/* Ajuste responsive para pantallas pequeñas o tablets */
+@media (max-width: 480px) {
+    .app-footer-modern {
+        padding: 6px 12px;
+    }
+    .footer-content {
+        font-size: 11px;
+    }
+}
+body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* El contenido principal debe expandirse para empujar el footer abajo */
+main.app-main {
+    flex: 1;
+}

@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .securityContext(sc -> sc.securityContextRepository(securityContextRepository()))
                 .authorizeHttpRequests(auth -> auth
                         // Permitir TODO acceso a archivos estáticos (CSS, JS, imágenes, etc.) sin importar dónde estén
-                        .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/assets/**", "/uploads/**", "/favicon.ico", "/*.html", "/*.css", "/*.js").permitAll()
+                        .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/img/**", "/assets/**", "/uploads/**", "/logo.jpg", "/*.html", "/*.css", "/*.js").permitAll()
                         // Documentación Swagger / OpenAPI
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         // Endpoints públicos para las 3 tablets (sin login) y login admin

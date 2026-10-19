@@ -8,30 +8,28 @@
     --danger: #e56b60;
 }
 
-/* Corrección del selector universal */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 html {
-    /* Asegura que la página permita scroll de forma fluida en móviles */
     overflow-x: hidden;
     height: 100%;
 }
 
+/* Un solo body unificado y limpio */
 body {
     margin: 0;
     font-family: Inter, "Segoe UI", Arial, sans-serif;
     background: var(--bg);
     color: var(--ink);
-    touch-action: manipulation;
-    /* Evita bloquear completamente el touch-action en todo el body para permitir scroll fluido */
-    min-height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    touch-action: manipulation;
 }
 
-/* Cabecera corporativa idéntica al prototipo */
+/* Cabecera corporativa unificada */
 header.app-header {
     background: var(--navy);
     color: #fff;
@@ -50,8 +48,30 @@ header.app-header {
     font-size: clamp(16px, 4vw, 19px);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     word-break: break-word;
+    color: #fff;
+    text-decoration: none;
+}
+.logo-wrapper {
+    background: #ffffff;
+    padding: 4px 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.brand-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .brand-logo {
+        height: 38px;
+    }
 }
 
 .brand span {
@@ -62,7 +82,7 @@ header.app-header {
     background: rgba(255, 255, 255, 0.14);
     color: var(--yellow);
     font-size: 12px;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 99px;
     font-weight: 700;
 }
@@ -71,6 +91,7 @@ nav.main-nav {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .btn-vial {
@@ -138,15 +159,16 @@ nav.main-nav .btn-vial.active {
     cursor: pointer;
 }
 
+/* El contenido principal se expande para empujar el footer abajo */
 main.app-main {
     max-width: 1080px;
     width: 100%;
-    margin: 20px auto 100px auto; /* Margen inferior mayor para evitar solapamiento con footer fijo */
+    margin: 20px auto 40px auto;
     padding: 0 16px;
     flex: 1;
 }
 
-/* Banner Hero sin dependencia obligatoria de internet */
+/* Banner Hero */
 .hero {
     background: linear-gradient(120deg, #103653f2, #007f80e0);
     color: #fff;
@@ -233,7 +255,7 @@ main.app-main {
     width: 100%;
 }
 
-/* Selector de categorías en tarjetas para tablets */
+/* Selector de categorías en tarjetas */
 .category-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -262,7 +284,6 @@ main.app-main {
 }
 
 /* Pantalla de Pregunta y Cronómetro */
-/* Pantalla de Pregunta y Cronómetro */
 .topline {
     display: flex;
     justify-content: space-between;
@@ -276,7 +297,7 @@ main.app-main {
     color: var(--danger);
     padding: 12px 28px;
     border-radius: 99px;
-    font-size: 32px; /* Cronómetro mucho más grande y visible */
+    font-size: 32px;
     font-weight: 900;
     border: 3px solid #fcdad6;
     box-shadow: 0 6px 20px rgba(229, 107, 96, 0.3);
@@ -289,7 +310,7 @@ main.app-main {
 
 @media(min-width: 768px) {
     .timer-badge {
-        font-size: 40px; /* Tamaño impactante en tablets y pantallas grandes */
+        font-size: 40px;
         padding: 14px 34px;
         border-width: 4px;
     }
@@ -406,7 +427,7 @@ main.app-main {
     background: #fff;
 }
 
-/* Tablas y Pestañas con soporte de scroll horizontal si desbordan */
+/* Tablas y Pestañas */
 .tabs-bar {
     display: flex;
     gap: 8px;
@@ -440,7 +461,7 @@ main.app-main {
 .table-vial {
     width: 100%;
     border-collapse: collapse;
-    min-width: 450px; /* Evita que se compacte de más en móviles */
+    min-width: 450px;
 }
 
 .table-vial th,
@@ -465,41 +486,14 @@ main.app-main {
     background: #f9fbfd;
 }
 
-footer.app-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    border-top: 1px solid #e1eaf0;
-    padding: 10px 15px;
-    z-index: 1000;
-    box-shadow: 0 -4px 12px rgba(16, 54, 83, 0.06);
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    .hero {
-        padding: 20px;
-    }
-
-    .card-vial {
-        padding: 16px;
-    }
-
-    header.app-header {
-        padding: 12px 14px;
-    }
-}
-
-/* Footer moderno, compacto y siempre adaptado */
+/* Footer moderno */
 .app-footer-modern {
     width: 100%;
     background: #ffffff;
     border-top: 1px solid #e1eaf0;
-    padding: 8px 16px;
+    padding: 10px 16px;
     text-align: center;
-    margin-top: auto; /* Empuja el footer hacia abajo si la página es corta */
+    margin-top: auto;
     box-shadow: 0 -2px 10px rgba(16, 54, 83, 0.04);
 }
 
@@ -507,10 +501,8 @@ footer.app-footer {
     font-size: 13px;
     color: var(--muted, #64798b);
     font-weight: 600;
-    letter-spacing: -0.2px;
 }
 
-/* Ajuste responsive para pantallas pequeñas o tablets */
 @media (max-width: 480px) {
     .app-footer-modern {
         padding: 6px 12px;
@@ -518,18 +510,4 @@ footer.app-footer {
     .footer-content {
         font-size: 11px;
     }
-}
-body {
-    margin: 0;
-    font-family: Inter, "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* El contenido principal debe expandirse para empujar el footer abajo */
-main.app-main {
-    flex: 1;
 }
